@@ -1,0 +1,17 @@
+body button.btn-edit-product-admin.btn.btn-primary {
+    font-size: 1rem;
+    margin-right: 20px;
+    width: 80px;
+    font-weight: 400;
+}
+body .cc-input {
+    width: 30%;
+    border: 1px solid #eee;
+    height: 40px;
+    border-radius: 3px;
+    padding: 0 16px;
+    margin: right;
+}
+body .cc-input:focus {
+    border-color: aqua;
+}

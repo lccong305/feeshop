@@ -1,0 +1,25 @@
+.login-container {
+    margin: 0 auto;
+    width: 100%;
+    padding: 20px;
+    background-image: linear-gradient(to bottom, #12c2e9, #c471ed, #f64f59);
+}
+.pass {
+    margin-bottom: 15px;
+    color: rgba(0, 0, 0, 0.4);
+    padding: 0px 10px;
+    font-weight: bold;
+}
+.login-title {
+    text-align: center;
+    margin: 20px;
+}
+.login-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+
+    margin: 0 auto;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    width: 50%;
+}
