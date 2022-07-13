@@ -22,8 +22,8 @@ import {
 const productApi = "https://fakestoreapi.com";
 
 export const getAllProduct = () => async (dispatch) => {
-  const res = await axios.get("https://apieshopbasic.herokuapp.com/Product");
-  // const res = await axios.get(productApi + "/products");
+  // const res = await axios.get("https://apieshopbasic.herokuapp.com/Product");
+  const res = await axios.get(productApi + "/products");
   dispatch({ type: GET_ALL_PRODUCT, payload: res.data });
 };
 
@@ -70,10 +70,7 @@ export const loginError = () => async (dispatch) => {
 };
 
 export const loginUser = async (user, dispatch, navigate) => {
-  // console.log(user);
-
   dispatch(loginFetching());
-
   try {
     const res = await axios.post("https://fakestoreapi.com/auth/login", user);
     dispatch(loginSuccess(res.data));

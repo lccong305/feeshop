@@ -8,12 +8,12 @@ import DefaultLayout from "./components/layouts/DefaultLayout";
 import ExtraLayout from "./components/layouts/ExtraLayout";
 
 function App() {
-  const isAdmin = true;
+  const isUser = true;
   return (
     <Router>
       <div className="App">
         <Routes>
-          {isAdmin
+          {isUser
             ? publicRoutes.map((route, index) => {
                 const Page = route.component;
                 let Layout = DefaultLayout;
@@ -23,7 +23,6 @@ function App() {
                 } else if (route.layout === null) {
                   Layout = Fragment;
                 }
-
                 return (
                   <Route
                     key={index}

@@ -12,6 +12,7 @@ const DataTableGrid = ({
   highlightOnHover,
   subHeader,
   subHeaderComponent,
+  actions,
 }) => {
   return (
     <DataTable
@@ -24,6 +25,7 @@ const DataTableGrid = ({
       highlightOnHover={highlightOnHover}
       subHeader={subHeader}
       subHeaderComponent={subHeaderComponent}
+      actions={actions}
       height={height}
     />
   );

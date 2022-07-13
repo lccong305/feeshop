@@ -6,6 +6,8 @@ import DataTableGrid from "../DataTableGrid";
 import EditProduct from "../EditProduct";
 import "./product.scss";
 import { v4 as uuidv4 } from "uuid";
+import { boolean } from "yup";
+import AddProduct from "../AddProduct";
 
 const Product = () => {
   const dispatch = useDispatch();
@@ -15,11 +17,12 @@ const Product = () => {
   useEffect(() => {
     dispatch(getAllProduct());
   }, []);
+
   const dataUser = useSelector((state) => state.product.products);
   const columns = [
     {
       name: "Name product",
-      selector: (row) => row.title,
+      selector: (row) => row.name,
       sortable: true,
       width: "200px",
     },
@@ -31,7 +34,7 @@ const Product = () => {
     },
     {
       name: "Description",
-      selector: (row) => row.description,
+      selector: (row) => row.shortDes,
       width: "200px",
     },
     {
@@ -41,7 +44,7 @@ const Product = () => {
     },
     {
       name: "Category",
-      selector: (row) => row.category,
+      selector: (row) => row.categoryName,
       width: "200px",
     },
 
@@ -65,6 +68,10 @@ const Product = () => {
       ],
     },
   ];
+  const [flag, setFlag] = useState(true);
+  const handleAddProduct = () => {
+    dispatch(openModal(flag));
+  };
 
   const handleEdit = (id) => {
     dispatch(openModal(id));
@@ -96,16 +103,23 @@ const Product = () => {
         data={filterProduct.length > 0 ? filterProduct : dataUser}
         highlightOnHover={true}
         subHeader={true}
-        subHeaderComponent={
+        subHeaderComponent={[
+          <button
+            onClick={handleAddProduct}
+            className="btn.btn-sm btn-info add-product"
+          >
+            Add new product
+          </button>,
           <input
             type="text"
             className="cc-input form-control"
             placeholder="Search here"
             onChange={(e) => handleSearch(e)}
-          />
-        }
+          />,
+        ]}
       />
       <EditProduct />
+      {/* <AddProduct /> */}
     </div>
   );
 };
