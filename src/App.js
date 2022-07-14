@@ -8,7 +8,7 @@ import DefaultLayout from "./components/layouts/DefaultLayout";
 import ExtraLayout from "./components/layouts/ExtraLayout";
 
 function App() {
-  const isUser = true;
+  const isUser = false;
   return (
     <Router>
       <div className="App">

@@ -42,7 +42,7 @@ ProductCard.propTypes = {
   img1: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
-  slug: PropTypes.number.isRequired,
+  slug: PropTypes.string.isRequired,
 };
 
 export default ProductCard;

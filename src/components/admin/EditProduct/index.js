@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import {
-  addProduct,
+  editProduct,
   closeModal,
   getDetailProduct,
 } from "../../../redux/actions";
@@ -10,8 +10,13 @@ import "./edit.scss";
 
 const EditProduct = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const id = useSelector((state) => state.productModal.value);
   const prd = useSelector((state) => state.product.product_detail);
+  // const { isSuccess } = useSelector((state) => state.adminproduct.addProduct);
+
+  const [_id, set_Id] = useState("");
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
   const [desc, setDesc] = useState("");
@@ -27,11 +32,12 @@ const EditProduct = () => {
   }, [id]);
 
   useEffect(() => {
-    setName(prd.title);
+    set_Id(prd.id);
+    setName(prd.name);
     setPrice(prd.price);
-    setDesc(prd.description);
+    setDesc(prd.shortDes);
     setImage(prd.image);
-    setCategory(prd.category);
+    setCategory(prd.categoryName);
   }, [id, prd]);
 
   const handleClose = (e) => {
@@ -44,8 +50,6 @@ const EditProduct = () => {
     setImage(file);
   };
 
-  const navigate = useNavigate();
-
   const handleEdit = (e) => {
     e.preventDefault();
 
@@ -57,19 +61,21 @@ const EditProduct = () => {
     }
 
     let productEdited = {
-      title: name,
+      id: _id,
+      name: name,
       price: price,
-      description: desc,
-      image: _image,
-      category: category,
+      shortDes: desc,
+      file: _image,
+      categoryName: category,
     };
-
-    addProduct(id, productEdited, dispatch, navigate);
+    editProduct(id, productEdited, dispatch, navigate);
   };
   return (
     <div
       className={`edit-wrapper ${
-        Object.entries(prd).length === 0 || id === null ? "" : "active"
+        Object.entries(prd).length === 0 || id === null || id === true
+          ? ""
+          : "active"
       }`}
     >
       <div className="overlay"></div>

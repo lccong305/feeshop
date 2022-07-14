@@ -56,7 +56,7 @@ const Home = () => {
                 name={item.title}
                 img1={item.image}
                 price={Number(item.price)}
-                slug={item.id}
+                slug={item.code}
               />
             ))}
           </Grid>

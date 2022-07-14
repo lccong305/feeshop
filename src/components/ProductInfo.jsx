@@ -10,11 +10,7 @@ const ProductInfo = ({ product }) => {
     const [previewImg, setPreviewImg] = useState(product.image)
     const [quantity, setQuantity] = useState(1)
     const [size, setSize] = useState(undefined)
-
-    let newProduct = { ...product, size: ['s', 'm', 'l'] }
-
-
-    const [descriptionExpand, setDescriptionExpand] = useState(false)
+    const [descriptionExpand, setDescriptionExpand] = useState(true)
     useEffect(() => {
         setPreviewImg(product.image)
         setSize(undefined)
@@ -27,10 +23,9 @@ const ProductInfo = ({ product }) => {
 
 
     const handleAddToCart = (item) => {
-
         dispatch(addToCart({ data: item, quantity: quantity }))
-
     }
+
 
     return (
         <div className="product">
@@ -54,14 +49,14 @@ const ProductInfo = ({ product }) => {
                     <div className="product-description__toggle">
                         <Button size="sm" onClick={() => setDescriptionExpand(!descriptionExpand)} >
                             {
-                                descriptionExpand ? 'Thu gọn' : 'Xem thêm'
+                                descriptionExpand ? 'Xem them' : 'Thu gon'
                             }
                         </Button>
                     </div>
                 </div>
             </div>
             <div className="product__info">
-                <h1 className="product__info__title">{product.title}</h1>
+                <h1 className="product__info__title">{product.name}</h1>
                 <div className="product__info__item">
                     <span className="product__info__item__price">
                         $ {product.price}
@@ -89,13 +84,15 @@ const ProductInfo = ({ product }) => {
                     </div>
                     <div className="product__info__item__list">
                         {
-                            newProduct?.size.map((item, index) => (
-                                <div key={index} className={`product__info__item__list__item ${size === item ? 'active' : ''}`} onClick={() => setSize(item)}>
-                                    <span className="product__info__item__list__item__size">
-                                        {item}
-                                    </span>
-                                </div>
-                            ))
+                            product.sizes ? (
+                                product.sizes.map((item, index) => (
+                                    <div key={index} className={`product__info__item__list__item ${size === item ? 'active' : ''}`} onClick={() => setSize(item)}>
+                                        <span className="product__info__item__list__item__size">
+                                            {item}
+                                        </span>
+                                    </div>
+                                ))
+                            ) : "isLoading"
                         }
                     </div>
                 </div>

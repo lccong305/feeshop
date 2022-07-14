@@ -14,21 +14,26 @@ import {
   ADD_USER_FETCHING,
   ADD_USER_SUCCESS,
   ADD_USER_ERROR,
+  EDIT_PRODUCT_START,
+  EDIT_PRODUCT_SUCCESS,
+  EDIT_PRODUCT_ERROR,
   ADD_PRODUCT_START,
   ADD_PRODUCT_SUCCESS,
   ADD_PRODUCT_ERROR,
 } from "../constants";
 
-const productApi = "https://fakestoreapi.com";
+// const productApi = "https://fakestoreapi.com";
 
 export const getAllProduct = () => async (dispatch) => {
-  // const res = await axios.get("https://apieshopbasic.herokuapp.com/Product");
-  const res = await axios.get(productApi + "/products");
+  const res = await axios.get("https://apieshopbasic.herokuapp.com/Product");
+  // const res = await axios.get(productApi + "/products");
   dispatch({ type: GET_ALL_PRODUCT, payload: res.data });
 };
 
-export const getDetailProduct = (id) => async (dispatch) => {
-  const res = await axios.get(productApi + "/products/" + id);
+export const getDetailProduct = (slug) => async (dispatch) => {
+  const res = await axios.get(
+    `https://apieshopbasic.herokuapp.com/Product/${slug}`
+  );
   dispatch({ type: GET_DETAIL_PRODUCT, payload: res.data });
 };
 
@@ -110,6 +115,66 @@ export const addUserAccount = async (userAccount, dispatch, navigate) => {
 
 // -------------------------- Admin product ----------------------------
 
+export const editProductStart = () => async (dispatch) => {
+  dispatch({ type: EDIT_PRODUCT_START });
+};
+
+export const editProductSuccess = (data) => async (dispatch) => {
+  dispatch({ type: EDIT_PRODUCT_SUCCESS, payload: data });
+};
+export const editProductError = () => async (dispatch) => {
+  dispatch({ type: EDIT_PRODUCT_ERROR });
+};
+
+export const editProduct = async (id, productEdited, dispatch, navigate) => {
+  dispatch(editProductStart());
+
+  try {
+    // console.log("action_prd: ", productEdited);
+    // console.log("action_img: ", productEdited.image);
+
+    const formData = new FormData();
+
+    formData.append("id", productEdited.id);
+    formData.append("name", productEdited.name);
+    formData.append("price", productEdited.price);
+    formData.append("shortDes", productEdited.shortDes);
+    formData.append("shortDetails", "xin chao");
+    formData.append("file", productEdited.file);
+    formData.append("quantity", 100);
+    formData.append("discount", 10);
+    formData.append("view", 1);
+    formData.append("categoryName", productEdited.categoryName);
+    formData.append("size", ["s", "m"]);
+
+    // axios({
+    //   method: "PUT",
+    //   url: "https://apieshopbasic.herokuapp.com/Product",
+    //   data: formData,
+    //   headers: { "Content-Type": "multipart/form-data" },
+    // }).then((res) => {
+    //   console.log(res.data);
+    //   // dispatch(addProductSuccess(res.data));
+    //   // navigate("/");
+    // });
+
+    const res = await axios.put(
+      "https://apieshopbasic.herokuapp.com/Product",
+      formData
+    );
+    console.log(res.data);
+    dispatch(editProductSuccess(res.data));
+
+    dispatch(closeModal());
+    // navigate("/product_ad");
+  } catch (err) {
+    console.log(err);
+    dispatch(editProductError());
+  }
+};
+
+// ---------------------------- add product ---------------------------------
+
 export const addProductStart = () => async (dispatch) => {
   dispatch({ type: ADD_PRODUCT_START });
 };
@@ -121,43 +186,48 @@ export const addProductError = () => async (dispatch) => {
   dispatch({ type: ADD_PRODUCT_ERROR });
 };
 
-export const addProduct = async (id, productEdited, dispatch, navigate) => {
-  dispatch(addProductStart());
+export const addProduct = async (newProduct, dispatch) => {
+  console.log(newProduct);
+  dispatch(editProductStart());
 
   try {
-    console.log("action_prd: ", productEdited);
-    console.log("action_img: ", productEdited.image);
+    const formData = new FormData();
 
-    let formData = new FormData();
-
-    console.log(productEdited.title);
-
-    formData.append("title", productEdited.title);
-    formData.append("price", productEdited.price);
-    formData.append("description", productEdited.description);
-    formData.append("image", productEdited.image);
-    formData.append("category", productEdited.category);
+    formData.append("name", newProduct.name);
+    formData.append("price", newProduct.price);
+    formData.append("shortDes", newProduct.shortDes);
+    formData.append("shortDetails", "xin chao");
+    formData.append("file", newProduct.file);
+    formData.append("quantity", 100);
+    formData.append("discount", 10);
+    formData.append("view", 1);
+    formData.append("categoryName", newProduct.categoryName);
+    formData.append("size", ["s", "m"]);
 
     axios({
-      method: "put",
-      url: `https://fakestoreapi.com/products/${id}`,
+      method: "POST",
+      url: "https://apieshopbasic.herokuapp.com/Product",
       data: formData,
       headers: { "Content-Type": "multipart/form-data" },
     }).then((res) => {
       console.log(res.data);
-      // dispatch(addProductSuccess(res.data));
+      dispatch(addProductSuccess(res.data));
       // navigate("/");
     });
 
     // const res = await axios.put(
-    //   `https://fakestoreapi.com/products/${id}`,
-    //   productEdited
+    //   "https://apieshopbasic.herokuapp.com/Product",
+    //   formData
     // );
     // console.log(res.data);
     // dispatch(addProductSuccess(res.data));
-    // navigate("/");
+
+    // dispatch(closeModal());
+    // navigate("/product_ad");
   } catch (err) {
     console.log(err);
     dispatch(addProductError());
   }
 };
+
+//----------------------------------  category ----------------------------------

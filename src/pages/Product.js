@@ -10,6 +10,8 @@ import { getDetailProduct } from "../redux/actions";
 // getAllProduct
 const Product = () => {
   const slug = useParams();
+
+  console.log(slug);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -28,7 +30,7 @@ const Product = () => {
   const relatedProducts = getProducts(4);
 
   return (
-    <Helmet title={product_detail.title}>
+    <Helmet title={product_detail.name}>
       <Section>
         <SectionBody>
           <ProductInfo product={product_detail} />
@@ -44,7 +46,7 @@ const Product = () => {
                 img1={item.image}
                 name={item.title}
                 price={Number(item.price)}
-                slug={item.id}
+                slug={item.code}
               />
             ))}
           </Grid>

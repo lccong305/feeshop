@@ -23,3 +23,26 @@ body .cc-input:focus {
     left: 10px;
     bottom: 5px;
 }
+
+.size {
+    display: block;
+    width: 20px;
+    height: 20px;
+    border: 1px solid red;
+    border-radius: 50%;
+    margin-left: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.iEslij div:first-child {
+    white-space: nowrap;
+    display: flex;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.gJJMdd:not(:last-of-type) {
+    display: flex;
+    align-items: center;
+}
