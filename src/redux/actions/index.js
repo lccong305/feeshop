@@ -189,7 +189,7 @@ export const addProductError = () => async (dispatch) => {
 
 export const addProduct = async (newProduct, dispatch) => {
   console.log(newProduct);
-  dispatch(editProductStart());
+  dispatch(addProductStart());
 
   try {
     const formData = new FormData();

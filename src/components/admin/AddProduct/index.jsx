@@ -22,13 +22,22 @@ const AddProduct = () => {
     const [size, setSize] = useState([]);
 
     const flag = useSelector((state) => state.productModal.value);
-    const products = useSelector((state) => state.product.products);
+    // const products = useSelector((state) => state.product.products);
+    const { isSuccess1 } = useSelector((state) => state.adminproduct._addProduct);
+    useEffect(() => {
+        if (isSuccess1) {
+            setName("")
+            setPrice("")
+            setShortDes("")
+            setImage(null)
+            setCategoryName("")
+            setSize("")
+            dispatch(closeModal());
+        }
+    }, [isSuccess1])
     console.log({ flag });
 
     var Sizes = ['s', 'm', 'l', 'xl']
-
-
-
 
     const handleClose = (e) => {
         e.preventDefault();
@@ -42,8 +51,7 @@ const AddProduct = () => {
         setCategoryName("")
         setSize("")
         dispatch(closeModal());
-
-        console.log(flag);
+        flag = null;
     };
 
 
@@ -55,13 +63,11 @@ const AddProduct = () => {
         setImage(null)
         setCategoryName("")
         setSize("")
-    }, [flag])
+    }, [])
     const handleAddProduct = (e) => {
         e.preventDefault();
         var x = document.getElementsByTagName("BODY")[0];
-        x.classList.remove("act_body");
-
-        console.log('Alert ')
+        // x.classList.remove("act_body");
         const newProduct = {
             name: name,
             price: price,
@@ -90,6 +96,7 @@ const AddProduct = () => {
                             type="text"
                             className="product-input-ad"
                             onChange={(e) => setName(e.target.value)}
+                            value={name}
                         />
                     </div>
                     <div className="form-group-edit">
@@ -98,6 +105,7 @@ const AddProduct = () => {
                             type="text"
                             className="product-input-ad"
                             onChange={(e) => setPrice(e.target.value)}
+                            value={price}
                         />
                     </div>
                     <div className="form-group-edit">
@@ -106,6 +114,7 @@ const AddProduct = () => {
                             type="text"
                             className="product-input-ad"
                             onChange={(e) => setCategoryName(e.target.value)}
+                            value={categoryName}
                         />
 
                         <FormControl fullWidth>
@@ -128,6 +137,7 @@ const AddProduct = () => {
                             type="text"
                             className="product-input-ad"
                             onChange={(e) => setShortDes(e.target.value)}
+                            value={shortDes}
                         />
                     </div>
                     <div className="form-group-edit">

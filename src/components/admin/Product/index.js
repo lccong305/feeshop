@@ -17,17 +17,20 @@ const Product = () => {
   const dispatch = useDispatch();
   const [searchInputValue, setSearchInputValue] = useState("");
   const [filterProduct, setFilterProduct] = useState([]);
+  const [idDelete, setIdDelete] = useState(null);
+
+  const [isDelete, setIsDelete] = useState(false);
 
   const { isSuccess } = useSelector((state) => state.adminproduct.addProduct);
   const { isSuccess1 } = useSelector((state) => state.adminproduct._addProduct);
 
   const products = useSelector((state) => state.product.products);
-
-  console.log(isSuccess1);
+  console.log(isDelete);
 
   useEffect(() => {
+    setIsDelete(false);
     dispatch(getAllProduct());
-  }, [isSuccess, isSuccess1]);
+  }, [isSuccess, isSuccess1, isDelete]);
 
   const columns = [
     {
@@ -65,7 +68,6 @@ const Product = () => {
     {
       name: "Action",
       width: " 400px",
-
       cell: (row) => [
         <button
           onClick={() => handleEdit(row.code)}
@@ -73,16 +75,13 @@ const Product = () => {
         >
           Edit
         </button>,
-        <button
-        // onClick={() => handleDelete(row.id)}
-        // className="btn-edit-product-admin btn btn-primary"
-        >
-          Delete
-        </button>,
-        <div>
-          <Button variant="outlined" onClick={() => handleClickOpen(row.id)}>
-            Open alert dialog
-          </Button>
+        <>
+          <button onClick={() => handleDelete(row.id)}>Delete</button>
+        </>,
+        <>
+          {/* <Button variant="outlined" onClick={handleClickOpen}>
+            Delete
+          </Button> */}
           <Dialog
             open={open}
             onClose={handleClose}
@@ -97,12 +96,12 @@ const Product = () => {
             </DialogContent>
             <DialogActions>
               <Button onClick={handleClose}>Huy</Button>
-              <Button onClick={() => handleDelete(row.id)} autoFocus>
+              <Button onClick={handleConfirmed} autoFocus>
                 Xoa
               </Button>
             </DialogActions>
           </Dialog>
-        </div>,
+        </>,
       ],
     },
   ];
@@ -117,9 +116,26 @@ const Product = () => {
   const handleEdit = (id) => {
     dispatch(openModal(id));
   };
+
   const handleDelete = (id) => {
-    let _id = JSON.stringify(id);
-    alert(id);
+    setOpen(true);
+    setIdDelete(id);
+
+    // axios({
+    //   method: "DELETE",
+    //   url: "https://apieshopbasic.herokuapp.com/Product",
+    //   data: _id,
+    //   headers: { "Content-Type": "application/json" },
+    // }).then((res) => {
+    //   console.log(res.data);
+    //   setIsDelete(true);
+    //   setOpen(false);
+    // });
+  };
+
+  function handleConfirmed() {
+    let _id = JSON.stringify(idDelete);
+    alert(_id);
     axios({
       method: "DELETE",
       url: "https://apieshopbasic.herokuapp.com/Product",
@@ -127,9 +143,10 @@ const Product = () => {
       headers: { "Content-Type": "application/json" },
     }).then((res) => {
       console.log(res.data);
+      setIsDelete(true);
       setOpen(false);
     });
-  };
+  }
 
   const handleSearch = (e) => {
     setSearchInputValue(e.target.value);
