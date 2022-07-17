@@ -62,7 +62,7 @@ const ProductInfo = ({ product }) => {
                         $ {product.price}
                     </span>
                 </div>
-                <div class="sharethis-inline-share-buttons"></div>
+                <div class="sharethis-inline-share-buttons">Shareing</div>
                 <div className="product__info__item">
                     <div className="product__info__item__title">
                         Màu sắc
