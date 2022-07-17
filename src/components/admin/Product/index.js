@@ -5,6 +5,12 @@ import { getAllProduct, openModal } from "../../../redux/actions";
 import AddProduct from "../AddProduct";
 import DataTableGrid from "../DataTableGrid";
 import EditProduct from "../EditProduct";
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
 import "./product.scss";
 
 const Product = () => {
@@ -68,11 +74,35 @@ const Product = () => {
           Edit
         </button>,
         <button
-          onClick={() => handleDelete(row.id)}
-          className="btn-edit-product-admin btn btn-primary"
+        // onClick={() => handleDelete(row.id)}
+        // className="btn-edit-product-admin btn btn-primary"
         >
           Delete
         </button>,
+        <div>
+          <Button variant="outlined" onClick={() => handleClickOpen(row.id)}>
+            Open alert dialog
+          </Button>
+          <Dialog
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+            <DialogTitle id="alert-dialog-title">{"Thong bao"}</DialogTitle>
+            <DialogContent>
+              <DialogContentText id="alert-dialog-description">
+                Ban co chac chan muon xoa?
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleClose}>Huy</Button>
+              <Button onClick={() => handleDelete(row.id)} autoFocus>
+                Xoa
+              </Button>
+            </DialogActions>
+          </Dialog>
+        </div>,
       ],
     },
   ];
@@ -81,7 +111,6 @@ const Product = () => {
   const handleAddProduct = () => {
     var x = document.getElementsByTagName("BODY")[0];
     x.classList.add("act_body");
-
     dispatch(openModal(flag));
   };
 
@@ -89,13 +118,16 @@ const Product = () => {
     dispatch(openModal(id));
   };
   const handleDelete = (id) => {
+    let _id = JSON.stringify(id);
     alert(id);
     axios({
       method: "DELETE",
       url: "https://apieshopbasic.herokuapp.com/Product",
-      data: id,
+      data: _id,
+      headers: { "Content-Type": "application/json" },
     }).then((res) => {
       console.log(res.data);
+      setOpen(false);
     });
   };
 
@@ -109,6 +141,16 @@ const Product = () => {
     );
     setFilterProduct(result);
   }, [searchInputValue]);
+
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
   return (
     <div className="prd-admin-wrap">
       <DataTableGrid

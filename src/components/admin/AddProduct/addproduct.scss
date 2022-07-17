@@ -74,3 +74,22 @@
     width: 130px;
     height: 130px;
 }
+.product-sizes {
+    display: flex;
+    gap: 10px;
+}
+.product-size {
+    display: flex;
+    width: 30px;
+    height: 30px;
+    border: 1px solid #333;
+    justify-content: center;
+    align-items: center;
+    font-weight: 500;
+    font-size: 1.4rem;
+    cursor: pointer;
+}
+
+.product-sizes.act_size .product-size {
+    border-color: red;
+}

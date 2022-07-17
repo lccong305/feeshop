@@ -64,7 +64,7 @@ export default (state = initialState, action) => {
         _addProduct: {
           isFetching: false,
           isSuccess1: true,
-          // currentProduct: action.payload,
+          currentProduct: action.payload,
         },
       };
     case ADD_PRODUCT_ERROR:

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { addProduct, closeModal } from '../../../redux/actions';
 import './addproduct.scss';
@@ -19,21 +19,48 @@ const AddProduct = () => {
     const [shortDes, setShortDes] = useState("");
     const [image, setImage] = useState(null);
     const [categoryName, setCategoryName] = useState("");
+    const [size, setSize] = useState([]);
 
     const flag = useSelector((state) => state.productModal.value);
     const products = useSelector((state) => state.product.products);
+    console.log({ flag });
+
+    var Sizes = ['s', 'm', 'l', 'xl']
 
 
 
 
     const handleClose = (e) => {
         e.preventDefault();
+        var x = document.getElementsByTagName("BODY")[0];
+        x.classList.remove("act_body");
+        console.log('cc')
+        setName("")
+        setPrice("")
+        setShortDes("")
+        setImage(null)
+        setCategoryName("")
+        setSize("")
         dispatch(closeModal());
-        flag = false;
+
+        console.log(flag);
     };
 
+
+    useEffect(() => {
+        console.log('render-addproduct')
+        setName("")
+        setPrice("")
+        setShortDes("")
+        setImage(null)
+        setCategoryName("")
+        setSize("")
+    }, [flag])
     const handleAddProduct = (e) => {
         e.preventDefault();
+        var x = document.getElementsByTagName("BODY")[0];
+        x.classList.remove("act_body");
+
         console.log('Alert ')
         const newProduct = {
             name: name,
@@ -43,6 +70,11 @@ const AddProduct = () => {
             categoryName: categoryName
         }
         addProduct(newProduct, dispatch);
+
+    }
+    console.log(size);
+    const handleSetSize = () => {
+        let sizeWrap = document.querySelector('.product-sizes').classList.toggle('act_size')
     }
     return (
         <div
@@ -97,6 +129,21 @@ const AddProduct = () => {
                             className="product-input-ad"
                             onChange={(e) => setShortDes(e.target.value)}
                         />
+                    </div>
+                    <div className="form-group-edit">
+                        <label>Size</label>
+                        <div className="product-sizes act_size">
+                            {
+                                Sizes.map((item, index) => (
+                                    <div key={index} className={`product__info__item__list__item ${size === item ? 'active' : ''}`} onClick={() => setSize(item)}>
+                                        <span className="product__info__item__list__item__size">
+                                            {item}
+                                        </span>
+                                    </div>
+                                ))
+                            }
+                        </div>
+
                     </div>
                     <div className="form-group-edit">
                         <label>Image</label>

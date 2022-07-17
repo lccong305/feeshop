@@ -17,7 +17,7 @@ const ProductViewModal = () => {
     const productData = useSelector((state) => state.product.products)
     const productSlug = useSelector((state) => state.productModal.value)
 
-    const getProductBySlug = (slug) => productData.find((e) => e.id === slug);
+    const getProductBySlug = (slug) => productData.find((e) => e.code === slug);
 
     useEffect(() => {
         setProduct(getProductBySlug(productSlug))

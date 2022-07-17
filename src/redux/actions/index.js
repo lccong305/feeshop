@@ -40,6 +40,7 @@ export const getDetailProduct = (slug) => async (dispatch) => {
 // =========================== Modal =========================
 
 export const openModal = (slug) => async (dispatch) => {
+  console.log(slug);
   dispatch({ type: OPEN_MODAL, payload: slug });
 };
 export const closeModal = () => async (dispatch) => {
