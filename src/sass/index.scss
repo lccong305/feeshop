@@ -34,3 +34,10 @@
         background-position: right -40px top 0;
     }
 }
+
+.cjABjN div:first-child {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: flex;
+}
