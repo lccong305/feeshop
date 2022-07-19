@@ -25,7 +25,6 @@ const Product = () => {
   const { isSuccess1 } = useSelector((state) => state.adminproduct._addProduct);
 
   const products = useSelector((state) => state.product.products);
-  console.log(isDelete);
 
   useEffect(() => {
     setIsDelete(false);
@@ -63,7 +62,11 @@ const Product = () => {
     {
       name: "Sizes",
       selector: (row) =>
-        row.sizes.map((item) => <div className="size">{item}</div>),
+        row.sizes.map((item) => (
+          <div className="size">
+            <div> {item}</div>
+          </div>
+        )),
     },
     {
       name: "Action",
@@ -75,9 +78,7 @@ const Product = () => {
         >
           Edit
         </button>,
-        <>
-          <button onClick={() => handleDelete(row.id)}>Delete</button>
-        </>,
+        <button onClick={() => handleDelete(row.id)}>Delete</button>,
         <>
           {/* <Button variant="outlined" onClick={handleClickOpen}>
             Delete
@@ -120,29 +121,16 @@ const Product = () => {
   const handleDelete = (id) => {
     setOpen(true);
     setIdDelete(id);
-
-    // axios({
-    //   method: "DELETE",
-    //   url: "https://apieshopbasic.herokuapp.com/Product",
-    //   data: _id,
-    //   headers: { "Content-Type": "application/json" },
-    // }).then((res) => {
-    //   console.log(res.data);
-    //   setIsDelete(true);
-    //   setOpen(false);
-    // });
   };
 
   function handleConfirmed() {
     let _id = JSON.stringify(idDelete);
-    alert(_id);
     axios({
       method: "DELETE",
       url: "https://apieshopbasic.herokuapp.com/Product",
       data: _id,
       headers: { "Content-Type": "application/json" },
     }).then((res) => {
-      console.log(res.data);
       setIsDelete(true);
       setOpen(false);
     });
@@ -151,6 +139,7 @@ const Product = () => {
   const handleSearch = (e) => {
     setSearchInputValue(e.target.value);
   };
+
   useEffect(() => {
     setFilterProduct(products);
     const result = products.filter((item) =>
@@ -161,10 +150,9 @@ const Product = () => {
 
   const [open, setOpen] = React.useState(false);
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
+  // const handleClickOpen = () => {
+  //   setOpen(true);
+  // };
   const handleClose = () => {
     setOpen(false);
   };

@@ -71,6 +71,10 @@ HeroSlider.propTypes = {
 
 const HeroSliderItem = (props) => (
   <div className={`hero-slider__item ${props.active ? "active" : ""}`}>
+    <div className="hero-slider__item__image">
+      <div className={`shape bg-${props.item.color}`}></div>
+      <img src={props.item.img} alt="" />
+    </div>
     <div className="hero-slider__item__info">
       <div
         className={`hero-slider__item__info__title color-${props.item.color}`}
@@ -87,10 +91,6 @@ const HeroSliderItem = (props) => (
           </Button>
         </Link>
       </div>
-    </div>
-    <div className="hero-slider__item__image">
-      <div className={`shape bg-${props.item.color}`}></div>
-      <img src={props.item.img} alt="" />
     </div>
   </div>
 );

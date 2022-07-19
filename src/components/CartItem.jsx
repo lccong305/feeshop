@@ -29,7 +29,7 @@ const CartItem = ({ item }) => {
             <div className="cart__item__info">
                 <div className="cart__item__info__name">
                     <Link to={`/catalog/${item.id}`}>
-                        {`${productCart.data.title} `}
+                        {`${productCart.data.name} `}
                     </Link>
                 </div>
                 <div className="cart__item__info__price">

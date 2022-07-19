@@ -35,7 +35,6 @@ const AddProduct = () => {
             dispatch(closeModal());
         }
     }, [isSuccess1])
-    console.log({ flag });
 
     var Sizes = ['s', 'm', 'l', 'xl']
 
@@ -43,7 +42,6 @@ const AddProduct = () => {
         e.preventDefault();
         var x = document.getElementsByTagName("BODY")[0];
         x.classList.remove("act_body");
-        console.log('cc')
         setName("")
         setPrice("")
         setShortDes("")
@@ -56,7 +54,6 @@ const AddProduct = () => {
 
 
     useEffect(() => {
-        console.log('render-addproduct')
         setName("")
         setPrice("")
         setShortDes("")
@@ -76,9 +73,7 @@ const AddProduct = () => {
             categoryName: categoryName
         }
         addProduct(newProduct, dispatch);
-
     }
-    console.log(size);
     const handleSetSize = () => {
         let sizeWrap = document.querySelector('.product-sizes').classList.toggle('act_size')
     }

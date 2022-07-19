@@ -1,19 +1,24 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import heroSliderData from "../assets/fake-data/hero-slider";
+import policy from "../assets/fake-data/policy";
+import Grid from "../components/Grid";
 import Helmet from "../components/Helmet";
 import HeroSlider from "../components/HeroSlider";
 import PolicyCard from "../components/PolicyCard";
-import heroSliderData from "../assets/fake-data/hero-slider";
-import { Link } from "react-router-dom";
-import policy from "../assets/fake-data/policy";
-import Grid from "../components/Grid";
-import { useDispatch, useSelector } from "react-redux";
-import { getAllProduct } from "../redux/actions";
 import ProductCard from "../components/ProductCard";
-import Section, { SectionTitle, SectionBody } from "../components/Section";
+import Section, { SectionBody, SectionTitle } from "../components/Section";
+import { getAllProduct } from "../redux/actions";
 
 const Home = () => {
   console.log("Page home_");
-
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 2000);
+  }, []);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getAllProduct());
@@ -26,6 +31,8 @@ const Home = () => {
     const start = Math.floor(Math.random() * (max - min) + min);
     return products.slice(start, start + count);
   };
+
+  let skeleton = [{}, {}, {}, {}];
 
   return (
     <Helmet title="Home">
@@ -50,15 +57,17 @@ const Home = () => {
         <SectionTitle>San pham ban chay</SectionTitle>
         <SectionBody>
           <Grid col={4} mdCol={2} smCol={1} gap={20}>
-            {getProducts(4).map((item, index) => (
-              <ProductCard
-                key={index}
-                name={item.title}
-                img1={item.image}
-                price={Number(item.price)}
-                slug={item.code}
-              />
-            ))}
+            {loading && skeleton.map(() => <ProductCard.Loading />)}
+            {!loading &&
+              getProducts(4).map((item, index) => (
+                <ProductCard
+                  key={index}
+                  name={item.title}
+                  img1={item.image}
+                  price={Number(item.price)}
+                  slug={item.code}
+                />
+              ))}
           </Grid>
         </SectionBody>
       </Section>

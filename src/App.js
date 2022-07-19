@@ -8,7 +8,7 @@ import DefaultLayout from "./components/layouts/DefaultLayout";
 import ExtraLayout from "./components/layouts/ExtraLayout";
 
 function App() {
-  const isUser = false;
+  const isUser = true;
   return (
     <Router>
       <div className="App">
@@ -17,7 +17,6 @@ function App() {
             ? publicRoutes.map((route, index) => {
                 const Page = route.component;
                 let Layout = DefaultLayout;
-
                 if (route.layout) {
                   Layout = route.layout;
                 } else if (route.layout === null) {

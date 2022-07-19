@@ -9,8 +9,15 @@ const Popper = () => {
 
     return (
         <div className="popper-container">
-            <div className="popper-input">
-                {currentUser ? <div> <AiOutlineLogout /> Logout </div> : (<p><BiLogIn /> <Link className="popper-link" to="/login">Login</Link></p>)}
+            <div className="">
+                {
+                    currentUser
+                        ? <div> <AiOutlineLogout /> Logout </div>
+                        :
+                        (<div className="popper-input">
+                            <BiLogIn /> <Link to="/login" className="popper-link" >Login</Link>
+                        </div>)
+                }
             </div>
             <div className="popper-input">
                 <BiFemaleSign /><Link to="/register" className="popper-link" >Register</Link>
