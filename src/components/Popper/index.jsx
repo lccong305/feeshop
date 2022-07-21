@@ -12,7 +12,7 @@ const Popper = () => {
             <div className="">
                 {
                     currentUser
-                        ? <div> <AiOutlineLogout /> Logout </div>
+                        ? <div className="popper-input">  <AiOutlineLogout /> <p className="popper-link">Logout</p> </div>
                         :
                         (<div className="popper-input">
                             <BiLogIn /> <Link to="/login" className="popper-link" >Login</Link>

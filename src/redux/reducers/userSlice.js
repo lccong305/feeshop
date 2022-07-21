@@ -2,6 +2,9 @@ import {
   ADD_USER_FETCHING,
   ADD_USER_SUCCESS,
   ADD_USER_ERROR,
+  GET_USER_START,
+  GET_USER_SUCCESS,
+  GET_USER_ERROR,
 } from "../constants";
 
 const initialState = {
@@ -9,6 +12,11 @@ const initialState = {
     isFetching: false,
     currentUser: null,
     error: false,
+  },
+  getUser: {
+    getUserFetching: false,
+    getUserData: null,
+    getUserError: false,
   },
 };
 
@@ -23,7 +31,6 @@ const userSlice = (state = initialState, action) => {
       };
 
     case ADD_USER_SUCCESS:
-      console.log("Payload_user: ", action.payload);
       return {
         ...state,
         userRegister: {
@@ -37,6 +44,31 @@ const userSlice = (state = initialState, action) => {
         userRegister: {
           isFetching: false,
           error: true,
+        },
+      };
+    // get user
+    case GET_USER_START:
+      return {
+        ...state,
+        getUser: {
+          getUserFetching: true,
+        },
+      };
+
+    case GET_USER_SUCCESS:
+      return {
+        ...state,
+        getUser: {
+          getUserFetching: false,
+          getUserData: action.payload,
+        },
+      };
+    case GET_USER_ERROR:
+      return {
+        ...state,
+        getUser: {
+          getUserFetching: false,
+          getUserError: true,
         },
       };
     default:

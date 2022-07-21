@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Button from "../components/Button";
 import CartItem from "../components/CartItem";
 import Helmet from "../components/Helmet";
@@ -8,15 +8,16 @@ const Cart = () => {
   const cartItems = useSelector((state) => state.cart.cartItems);
   const currentUser = useSelector((state) => state.auth.login.currentUser);
 
-  console.log(currentUser);
-  let toTal = 0;
+  const navigate = useNavigate();
 
+  let toTal = 0;
   cartItems.map((item) => {
     toTal += item.quantity * item.data.price;
     return toTal;
   });
 
   const handleClick = () => {
+    navigate("/profile");
     console.log("click to buy");
   };
   return (
@@ -29,7 +30,7 @@ const Cart = () => {
               hàng
             </p>
             <div className="cart__info__txt__price">
-              <span>Thành tiền:{toTal}</span>
+              <span>Thành tiền: {toTal}</span>
             </div>
           </div>
           <div className="cart__info__btn">
@@ -39,12 +40,12 @@ const Cart = () => {
               </Button>
             ) : (
               <Button size="block" onClick={handleClick}>
-                Login to buy
+                Đăng nhập để đặt hàng
               </Button>
             )}
             <Link to="/catalog">
               <Button size="block" disabled={true}>
-                Tiếp tục mua hàng
+                Tiếp tục mua sắm
               </Button>
             </Link>
           </div>

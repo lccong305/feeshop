@@ -5,6 +5,7 @@ import Catalog from "../pages/Catalog";
 import Product from "../pages/Product";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
+import Profile from "../pages/Profile";
 
 // import ExtraLayout from "../components/layouts/ExtraLayout";
 // import { Dashboard } from "@mui/icons-material";
@@ -12,6 +13,7 @@ import Register from "../pages/Register";
 import Dashboard from "../components/admin/Dashboard";
 import AccountUser from "../components/admin/AccountUser";
 import ProductAdmin from "../components/admin/Product";
+import ProfileLayout from "../components/layouts/ProfileLayout";
 
 const publicRoutes = [
   { path: "/", component: Home },
@@ -22,7 +24,7 @@ const publicRoutes = [
   { path: config.routes._product, component: Product },
   { path: config.routes.login, component: Login },
   { path: config.routes.register, component: Register },
-  // { path: config.routes.catalog, component: Catalog, layout: ExtraLayout },
+  { path: config.routes.profile, component: Profile, layout: ProfileLayout },
 ];
 
 const privateRoutes = [

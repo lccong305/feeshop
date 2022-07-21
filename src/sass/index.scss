@@ -41,3 +41,8 @@
     text-overflow: ellipsis;
     display: flex;
 }
+
+.gJJMdd:not(:last-of-type) {
+    display: flex;
+    align-items: center;
+}

@@ -6,6 +6,8 @@ const routes = {
   product: "/product",
   login: "/login",
   register: "/register",
+  profile: "/profile",
+  checkout: "/check-out",
 
   dashboard: "/",
   account_user: "/account_user",

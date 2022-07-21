@@ -20,13 +20,13 @@ import {
   ADD_PRODUCT_START,
   ADD_PRODUCT_SUCCESS,
   ADD_PRODUCT_ERROR,
+  GET_USER_ERROR,
+  GET_USER_SUCCESS,
+  GET_USER_START,
 } from "../constants";
-
-// const productApi = "https://fakestoreapi.com";
 
 export const getAllProduct = () => async (dispatch) => {
   const res = await axios.get("https://apieshopbasic.herokuapp.com/Product");
-  // const res = await axios.get(productApi + "/products");
   dispatch({ type: GET_ALL_PRODUCT, payload: res.data });
 };
 
@@ -78,12 +78,45 @@ export const loginError = () => async (dispatch) => {
 export const loginUser = async (user, dispatch, navigate) => {
   dispatch(loginFetching());
   try {
-    const res = await axios.post("https://fakestoreapi.com/auth/login", user);
+    const res = await axios.post(
+      "https://apieshopbasic.herokuapp.com/auth/signin",
+      user
+    );
     dispatch(loginSuccess(res.data));
     navigate("/");
   } catch (err) {
     console.log(err);
     dispatch(loginError());
+  }
+};
+// =========================== get user when login =========================
+export const getUserStart = () => async (dispatch) => {
+  dispatch({ type: GET_USER_START });
+};
+
+export const getUserSuccess = (data) => async (dispatch) => {
+  dispatch({ type: GET_USER_SUCCESS, payload: data });
+};
+export const getUserError = () => async (dispatch) => {
+  dispatch({ type: GET_USER_ERROR });
+};
+
+export const getUser = async (accessToken, dispatch) => {
+  dispatch(getUserStart());
+  try {
+    const res = await axios.get(
+      "https://apieshopbasic.herokuapp.com/User/Profile",
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
+    dispatch(getUserSuccess(res.data));
+  } catch (err) {
+    console.log(err);
+    dispatch(getUserError());
   }
 };
 
@@ -188,9 +221,7 @@ export const addProductError = () => async (dispatch) => {
 };
 
 export const addProduct = async (newProduct, dispatch) => {
-  console.log(newProduct);
   dispatch(addProductStart());
-
   try {
     const formData = new FormData();
 
@@ -215,16 +246,6 @@ export const addProduct = async (newProduct, dispatch) => {
       dispatch(addProductSuccess(res.data));
       // navigate("/");
     });
-
-    // const res = await axios.put(
-    //   "https://apieshopbasic.herokuapp.com/Product",
-    //   formData
-    // );
-    // console.log(res.data);
-    // dispatch(addProductSuccess(res.data));
-
-    // dispatch(closeModal());
-    // navigate("/product_ad");
   } catch (err) {
     console.log(err);
     dispatch(addProductError());
