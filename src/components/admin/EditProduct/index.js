@@ -1,10 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import FormControl from "@mui/material/FormControl";
+import InputLabel from "@mui/material/Input";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
 import {
   editProduct,
   closeModal,
   getDetailProduct,
+  getAllCate,
 } from "../../../redux/actions";
 import "./edit.scss";
 
@@ -15,6 +20,9 @@ const EditProduct = () => {
   const id = useSelector((state) => state.productModal.value);
   const prd = useSelector((state) => state.product.product_detail);
   // const { isSuccess } = useSelector((state) => state.adminproduct.addProduct);
+  const { getCateData, getCateFetching } = useSelector(
+    (state) => state.cate.getCate
+  );
 
   const [_id, set_Id] = useState("");
   const [name, setName] = useState("");
@@ -70,6 +78,10 @@ const EditProduct = () => {
     };
     editProduct(id, productEdited, dispatch, navigate);
   };
+
+  useEffect(() => {
+    getAllCate(dispatch);
+  }, []);
   return (
     <div
       className={`edit-wrapper ${
@@ -102,12 +114,29 @@ const EditProduct = () => {
           </div>
           <div className="form-group-edit">
             <label>Category</label>
-            <input
+            {/* <input
               type="text"
               className="product-input-ad"
               value={category}
               onChange={(e) => setCategory(e.target.value)}
-            />
+            /> */}
+
+            <FormControl fullWidth>
+              <Select
+                value={category}
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                label="Age"
+                onChange={(e) => setCategory(e.target.value)}
+              >
+                {getCateData?.map((item) => (
+                  <MenuItem value={item.name}>{item.name}</MenuItem>
+                ))}
+                {/*                                 
+                                <MenuItem value={20}>Twenty</MenuItem>
+                                <MenuItem value={30}>Thirty</MenuItem> */}
+              </Select>
+            </FormControl>
           </div>
           <div className="form-group-edit">
             <label>Description</label>

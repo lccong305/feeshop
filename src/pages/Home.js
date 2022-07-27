@@ -12,18 +12,21 @@ import Section, { SectionBody, SectionTitle } from "../components/Section";
 import { getAllProduct } from "../redux/actions";
 
 const Home = () => {
-  console.log("Page home_");
+  const dispatch = useDispatch();
+
+  const products = useSelector((state) => state.product.products);
+  // const loading_product = useSelector((state) => state.product.loading);
   const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
     }, 2000);
   }, []);
-  const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(getAllProduct());
   }, [dispatch]);
-  const products = useSelector((state) => state.product.products);
 
   const getProducts = (count) => {
     const max = products.length - count;
@@ -71,6 +74,7 @@ const Home = () => {
           </Grid>
         </SectionBody>
       </Section>
+      {/* {loading_product ? <PureLoading /> : ""} */}
     </Helmet>
   );
 };

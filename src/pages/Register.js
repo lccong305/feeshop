@@ -5,6 +5,12 @@ import * as Yup from "yup";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { addUserAccount, loginUser } from "../redux/actions";
+import Box from "@mui/material/Box";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
+
 const Register = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -58,24 +64,16 @@ const Register = () => {
       window.alert("Form submitted");
       if (values.username.length > 0) {
         const newUser = {
-          email: values.email,
           username: values.username,
           password: values.password,
-          name: {
-            firstname: "john",
-            lastname: "doe",
-          },
-          address: {
-            geolocation: {
-              lat: "-37.3159",
-              long: "81.1496",
-            },
-            city: "kilcoole",
-            street: "new road",
-            number: 7682,
-            zipcode: "12926-3874",
-          },
+          email: values.email,
+          firstName: values.firstName,
+          name: values.name,
           phone: values.phone,
+          address: values.address,
+          gender: sex,
+          avatar: null,
+          roles: ["user"],
         };
         if (newUser.email !== "")
           dispatch(addUserAccount(newUser, dispatch, navigate));
@@ -84,7 +82,12 @@ const Register = () => {
   });
 
   const handleSubmit = () => {};
+  const [sex, setSex] = React.useState("");
 
+  const handleChange1 = (event) => {
+    setSex(event.target.value);
+  };
+  console.log(sex);
   return (
     <div>
       <h1>Register</h1>
@@ -129,6 +132,18 @@ const Register = () => {
             <p className="errorMsg"> {formik.errors.password} </p>
           )}
 
+          <label> First Name </label>
+          <Input
+            type="text"
+            id="firstName"
+            name="firstName"
+            value={formik.values.firstName}
+            onChange={formik.handleChange}
+            placeholder="Enter your first name"
+          />
+          {formik.errors.name && (
+            <p className="errorMsg"> {formik.errors.name} </p>
+          )}
           <label> Name </label>
           <Input
             type="text"
@@ -155,7 +170,26 @@ const Register = () => {
             <p className="errorMsg"> {formik.errors.address} </p>
           )}
 
-          <label>phone </label>
+          <div className="form-sex">
+            <Box sx={{ minWidth: 120 }}>
+              <FormControl fullWidth>
+                <InputLabel id="demo-simple-select-label">Giới tính</InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={sex}
+                  label="Giới tính"
+                  onChange={handleChange1}
+                >
+                  <MenuItem value={1}>Nam</MenuItem>
+                  <MenuItem value={2}>Nu</MenuItem>
+                  {/* <MenuItem value={30}>Thirty</MenuItem> */}
+                </Select>
+              </FormControl>
+            </Box>
+          </div>
+
+          <label>Phone </label>
           <Input
             type="text"
             id="phone"
@@ -169,7 +203,7 @@ const Register = () => {
           )}
           <button type="submit" onSubmit={handleSubmit}>
             {" "}
-            Continue{" "}
+            Sign up
           </button>
         </form>
       </section>

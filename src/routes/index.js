@@ -6,8 +6,9 @@ import Product from "../pages/Product";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
 import Profile from "../pages/Profile";
+import Category from "../pages/Category";
 
-// import ExtraLayout from "../components/layouts/ExtraLayout";
+import ExtraLayout from "../components/layouts/ExtraLayout";
 // import { Dashboard } from "@mui/icons-material";
 // import DefaultLayout from "../components/layouts/DefaultLayout";
 import Dashboard from "../components/admin/Dashboard";
@@ -25,6 +26,7 @@ const publicRoutes = [
   { path: config.routes.login, component: Login },
   { path: config.routes.register, component: Register },
   { path: config.routes.profile, component: Profile, layout: ProfileLayout },
+  { path: config.routes.category, component: Category },
 ];
 
 const privateRoutes = [

@@ -8,71 +8,72 @@ import {
 } from "../constants";
 
 const initialState = {
-  addProduct: {
+  editProduct: {
     //edit
-    isFetching: false,
-    isSuccess: false,
-    currentProduct: null,
-    error: false,
+    editProductFetching: false,
+    editProductSuccess: false,
+    // editProductData: null,
+    editProductError: false,
   },
-  _addProduct: {
-    isFetching: false,
-    isSuccess1: false,
-    currentProduct: null,
-    error: false,
+  addProduct: {
+    addProductFetching: false,
+    addProductSuccess: false,
+    // addProductData: null,
+    addProductError: false,
   },
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
+    // -------------------------------- Edit product --------------------------------
     case EDIT_PRODUCT_START:
       return {
         ...state,
-        addProduct: {
-          isFetching: true,
+        editProduct: {
+          editProductSuccess: false,
+          editProductFetching: true,
         },
       };
     case EDIT_PRODUCT_SUCCESS:
       return {
         ...state,
-        addProduct: {
-          isFetching: false,
-          isSuccess: true,
+        editProduct: {
+          editProductSuccess: true,
+          editProductFetching: false,
           // currentProduct: action.payload,
         },
       };
     case EDIT_PRODUCT_ERROR:
       return {
         ...state,
-        addProduct: {
-          isFetching: false,
-          error: true,
+        editProduct: {
+          editProductError: true,
         },
       };
-    // ----------- Add product --------------------------------
-
+    // -------------------------------- Add product --------------------------------
     case ADD_PRODUCT_START:
       return {
         ...state,
-        _addProduct: {
-          isFetching: true,
+        addProduct: {
+          addProductSuccess: false,
+          addProductFetching: true,
         },
       };
     case ADD_PRODUCT_SUCCESS:
       return {
         ...state,
-        _addProduct: {
-          isFetching: false,
-          isSuccess1: true,
-          currentProduct: action.payload,
+        addProduct: {
+          addProductFetching: false,
+          addProductSuccess: true,
+          // currentProduct: action.payload,
         },
       };
     case ADD_PRODUCT_ERROR:
       return {
         ...state,
-        _addProduct: {
-          isFetching: false,
-          error: true,
+        addProduct: {
+          addProductFetching: false,
+          addProductError: true,
         },
       };
 
