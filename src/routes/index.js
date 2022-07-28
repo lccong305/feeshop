@@ -6,7 +6,7 @@ import Product from "../pages/Product";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
 import Profile from "../pages/Profile";
-<<<<<<< HEAD
+// <<<<<<< HEAD
 import Payment from "../pages/Payment";
 import PaymentOffline from "../pages/PaymentOffline";
 import PaymentPaypal from "../pages/PaymentPaypal";
