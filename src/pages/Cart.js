@@ -17,7 +17,7 @@ const Cart = () => {
   });
 
   const handleClick = () => {
-    navigate("/profile");
+    // navigate("/profile");
     console.log("click to buy");
   };
   return (
@@ -35,13 +35,17 @@ const Cart = () => {
           </div>
           <div className="cart__info__btn">
             {currentUser ? (
+              <Link to="/payment">
               <Button size="block" onClick={handleClick}>
                 Đặt hàng
               </Button>
+              </Link>
             ) : (
+              
               <Button size="block" onClick={handleClick}>
                 Đăng nhập để đặt hàng
               </Button>
+            
             )}
             <Link to="/catalog">
               <Button size="block" disabled={true}>

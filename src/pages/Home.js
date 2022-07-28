@@ -76,6 +76,8 @@ const Home = () => {
       </Section>
       {/* {loading_product ? <PureLoading /> : ""} */}
     </Helmet>
+
+
   );
 };
 

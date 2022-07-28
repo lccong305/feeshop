@@ -34,6 +34,7 @@ const Product = () => {
     useSelector((state) => state.adminproduct.editProduct);
 
   // const [isLoading, setIsLoading] = useState(!addProductFetching);
+  
 
   useEffect(() => {
     setIsDelete(false);

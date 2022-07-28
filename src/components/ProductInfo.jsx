@@ -3,6 +3,7 @@ import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai'
 import { useDispatch } from 'react-redux'
 import { addToCart } from '../redux/actions'
 import Button from './Button'
+import { Link, useNavigate } from "react-router-dom";
 
 const ProductInfo = ({ product }) => {
 
@@ -115,7 +116,9 @@ const ProductInfo = ({ product }) => {
                 </div>
                 <div className="product__info__item">
                     <Button onClick={() => handleAddToCart(product)}>thêm vào giỏ</Button>
+                    <Link to="/payment">
                     <Button >mua ngay</Button>
+                    </Link>
                 </div>
             </div>
             <div className={`product-description mobile `}>
