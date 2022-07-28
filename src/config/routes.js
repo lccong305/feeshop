@@ -8,7 +8,12 @@ const routes = {
   register: "/register",
   profile: "/profile",
   checkout: "/check-out",
-
+  payment: "/payment",
+  paymentoffline: "/paymentoffline",
+  paymentpaypal: "/paymentpaypal",
+  paymentvnpay: "/paymentvnpay",
+  orderer: "ordered",
+  
   dashboard: "/",
   account_user: "/account_user",
   product_ad: "/product_ad",
