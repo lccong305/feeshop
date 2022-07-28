@@ -23,11 +23,30 @@ import {
   GET_USER_ERROR,
   GET_USER_SUCCESS,
   GET_USER_START,
+  GET_CATE_START,
+  GET_CATE_SUCCESS,
+  GET_CATE_ERROR,
+  GET_PRODUCT_BY_CATEGORY,
+  GET_PRODUCT_BY_CATEGORY_START,
 } from "../constants";
 
+export const fetch_request = () => {
+  return { type: "products/fetch_request" };
+};
+
+export const fetch_error = () => {
+  return { type: "products/fetch_error" };
+};
+
 export const getAllProduct = () => async (dispatch) => {
-  const res = await axios.get("https://apieshopbasic.herokuapp.com/Product");
-  dispatch({ type: GET_ALL_PRODUCT, payload: res.data });
+  dispatch(fetch_request());
+  try {
+    const res = await axios.get("https://apieshopbasic.herokuapp.com/Product");
+    dispatch({ type: "products/fetch_success", payload: res.data });
+  } catch (err) {
+    console.log(err);
+    dispatch(fetch_error());
+  }
 };
 
 export const getDetailProduct = (slug) => async (dispatch) => {
@@ -137,7 +156,10 @@ export const addUserAccount = async (userAccount, dispatch, navigate) => {
   dispatch(addUserFetching());
 
   try {
-    const res = await axios.post("https://fakestoreapi.com/users", userAccount);
+    const res = await axios.post(
+      "https://apieshopbasic.herokuapp.com/auth/signup",
+      userAccount
+    );
     console.log(res.data);
     dispatch(addUserSuccess(res.data));
     // navigate("/");
@@ -253,3 +275,38 @@ export const addProduct = async (newProduct, dispatch) => {
 };
 
 //----------------------------------  category ----------------------------------
+export const getCateStart = () => async (dispatch) => {
+  dispatch({ type: GET_CATE_START });
+};
+
+export const getCateSuccess = (data) => async (dispatch) => {
+  dispatch({ type: GET_CATE_SUCCESS, payload: data });
+};
+export const getCateError = () => async (dispatch) => {
+  dispatch({ type: GET_CATE_ERROR });
+};
+
+export const getAllCate = async (dispatch) => {
+  dispatch(getCateStart());
+  try {
+    const res = await axios.get("https://apieshopbasic.herokuapp.com/Category");
+    dispatch(getCateSuccess(res.data));
+  } catch (err) {
+    console.log(err);
+    dispatch(getCateError());
+  }
+};
+
+export const getProductByCategoryStart = () => async (dispatch) => {
+  dispatch({ type: GET_PRODUCT_BY_CATEGORY_START });
+};
+
+export const getProductByCategory = (slug) => async (dispatch) => {
+  dispatch(getProductByCategoryStart());
+  try {
+    const res = await axios.get(`https://apieshopbasic.herokuapp.com/${slug}`);
+    dispatch({ type: GET_PRODUCT_BY_CATEGORY, payload: res.data });
+  } catch (err) {
+    console.log(err);
+  }
+};

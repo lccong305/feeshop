@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useEffect, useRef } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 
 import Helmet from "../components/Helmet";
 // import CheckBox from "../components/CheckBox";
@@ -9,24 +9,22 @@ import Helmet from "../components/Helmet";
 import size from "../assets/fake-data/product-size";
 import Button from "../components/Button";
 // import InfinityList from "../components/InfinityList";
-// import ProductCard from "../components/ProductCard";
 // import Section, { SectionTitle, SectionBody } from "../components/Section";
+import { AiOutlineClose } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllProduct } from "../redux/actions";
-// import Grid from "../components/Grid";
 import CheckBox from "../components/CheckBox";
 import InfinityList from "../components/InfinityList";
-import { AiOutlineClose } from "react-icons/ai";
-
+import { getAllProduct } from "../redux/actions";
+import PureLoading from "../components/Loading/PureLoading";
+// import SidebarProduct from "../components/SidebarProduct";
 const Catalog = () => {
-  console.log("Page catalog_");
   const dispatch = useDispatch();
+  const products = useSelector((state) => state.product.products);
+  const loading = useSelector((state) => state.product.loading);
 
   useEffect(() => {
     dispatch(getAllProduct());
   }, [dispatch]);
-
-  const products = useSelector((state) => state.product.products);
 
   const initFilter = {
     category: [],
@@ -39,7 +37,6 @@ const Catalog = () => {
 
   const updateProducts = useCallback(() => {
     let temp = products;
-
     if (filter.size.length > 0) {
       console.log(filter.size);
       temp = temp.filter((e) => {
@@ -75,7 +72,6 @@ const Catalog = () => {
   const filterRef = useRef(null);
 
   const showHideFilter = () => filterRef.current.classList.toggle("active");
-
   const clearFilter = () => {
     setFilter(initFilter);
   };
@@ -91,48 +87,7 @@ const Catalog = () => {
             <AiOutlineClose />
             close
           </div>
-          <div className="catalog__filter__widget">
-            <div className="catalog__filter__widget__title">
-              danh mục sản phẩm
-            </div>
-
-            <div className="catalog__filter__widget__content">
-              {/* {category.map((item, index) => (
-                <div
-                  key={index}
-                  className="catalog__filter__widget__content__item"
-                >
-                  <CheckBox
-                    label={item.display}
-                    onChange={(input) =>
-                      filterSelect("CATEGORY", input.checked, item)
-                    }
-                    checked={filter.category.includes(item.categorySlug)}
-                  />
-                </div>
-              ))} */}
-            </div>
-          </div>
-
-          <div className="catalog__filter__widget">
-            <div className="catalog__filter__widget__title">màu sắc</div>
-            <div className="catalog__filter__widget__content">
-              {/* {colors.map((item, index) => (
-                <div
-                  key={index}
-                  className="catalog__filter__widget__content__item"
-                >
-                  <CheckBox
-                    label={item.display}
-                    onChange={(input) =>
-                      filterSelect("COLOR", input.checked, item)
-                    }
-                    checked={filter.color.includes(item.color)}
-                  />
-                </div>
-              ))} */}
-            </div>
-          </div>
+          <div className="catalog__filter__widget"></div>
 
           <div className="catalog__filter__widget">
             <div className="catalog__filter__widget__title">kích cỡ</div>
@@ -171,6 +126,7 @@ const Catalog = () => {
           {<InfinityList data={prdList} />}
         </div>
       </div>
+      {loading ? <PureLoading /> : ""}
     </Helmet>
   );
 };

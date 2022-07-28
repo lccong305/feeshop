@@ -12,24 +12,40 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import "./product.scss";
+import PureLoading from "../../Loading/PureLoading";
 
 const Product = () => {
+  console.log("admin product");
+
   const dispatch = useDispatch();
+
   const [searchInputValue, setSearchInputValue] = useState("");
   const [filterProduct, setFilterProduct] = useState([]);
   const [idDelete, setIdDelete] = useState(null);
-
   const [isDelete, setIsDelete] = useState(false);
 
-  const { isSuccess } = useSelector((state) => state.adminproduct.addProduct);
-  const { isSuccess1 } = useSelector((state) => state.adminproduct._addProduct);
-
   const products = useSelector((state) => state.product.products);
+  const loading = useSelector((state) => state.product.loading);
+
+  const { addProductFetching, addProductSuccess, addProductError } =
+    useSelector((state) => state.adminproduct.addProduct);
+
+  const { editProductFetching, editProductSuccess, editProductError } =
+    useSelector((state) => state.adminproduct.editProduct);
+
+  const [isLoading, setIsLoading] = useState(!addProductFetching);
 
   useEffect(() => {
     setIsDelete(false);
     dispatch(getAllProduct());
-  }, [isSuccess, isSuccess1, isDelete]);
+  }, [
+    addProductFetching,
+    addProductSuccess,
+    editProductFetching,
+    editProductSuccess,
+    isDelete,
+    dispatch,
+  ]);
 
   const columns = [
     {
@@ -186,6 +202,7 @@ const Product = () => {
       />
       <EditProduct />
       <AddProduct />
+      {loading ? <PureLoading /> : ""}
     </div>
   );
 };

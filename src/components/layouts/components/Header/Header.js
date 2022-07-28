@@ -10,6 +10,11 @@ import Tippy from "@tippyjs/react";
 import TippyHeadless from "@tippyjs/react/headless";
 import "tippy.js/dist/tippy.css";
 import Popper from "../../../Popper";
+import { useState } from "react";
+import styled from "styled-components";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllCate } from "../../../../redux/actions";
+import PureLoading from "../../../Loading/PureLoading";
 
 const mainNav = [
   {
@@ -20,14 +25,28 @@ const mainNav = [
     display: "Sản phẩm",
     path: "/catalog",
   },
+  // {
+  //   display: "Danh muc",
+  // },
 ];
 const Header = () => {
   const { pathname } = useLocation();
+  const [showDropdown, setShowDropdown] = useState(false);
   const activeNav = mainNav.findIndex((e) => e.path === pathname);
+  const dispatch = useDispatch();
+  const { getCateData, getCateFetching } = useSelector(
+    (state) => state.cate.getCate
+  );
 
   const headerRef = useRef(null);
 
+  const handleToggleShowDropdown = () => {
+    setShowDropdown(!showDropdown);
+  };
+
   useEffect(() => {
+    getAllCate(dispatch);
+
     window.addEventListener("scroll", () => {
       if (
         document.body.scrollTop > 80 ||
@@ -46,6 +65,35 @@ const Header = () => {
   const menuLeft = useRef(null);
 
   const menuToggle = () => menuLeft.current.classList.toggle("active");
+
+  const Dropdown = styled.div`
+    position: relative;
+    height: 50px;
+    line-height: 50px;
+    margin-left: 20px;
+    z-index: 120;
+  `;
+  const DropdownTitle = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  `;
+  const DropdownContent = styled.div`
+    position: absolute;
+    width: 150px;
+    border-radius: 10px;
+    background-color: #fff;
+    top: 40px;
+    left: -10px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  `;
+
+  const DropdownLink = styled.a`
+    display: block;
+    line-height: normal;
+    padding: 5px 10px;
+    font-size: 16px;
+  `;
 
   return (
     <div className="header" ref={headerRef}>
@@ -71,11 +119,30 @@ const Header = () => {
                 }`}
                 onClick={menuToggle}
               >
-                <Link to={item.path}>
+                <Link to={item.path ? item.path : "#"}>
                   <span>{item.display}</span>
                 </Link>
               </div>
             ))}
+            <Dropdown>
+              <DropdownTitle onClick={handleToggleShowDropdown} to="#">
+                Danh mục
+              </DropdownTitle>
+              {showDropdown && (
+                <DropdownContent>
+                  {!getCateFetching ? (
+                    getCateData?.map((item) => (
+                      <DropdownLink>
+                        {" "}
+                        <Link to={`../category/${item.name}`}>{item.name}</Link>
+                      </DropdownLink>
+                    ))
+                  ) : (
+                    <PureLoading />
+                  )}
+                </DropdownContent>
+              )}
+            </Dropdown>
           </div>
           <div className="header__menu__right">
             <div className="header__menu__item header__menu__right__item">

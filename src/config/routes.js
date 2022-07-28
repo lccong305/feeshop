@@ -7,6 +7,8 @@ const routes = {
   login: "/login",
   register: "/register",
   profile: "/profile",
+  category: "/category/:name__cate",
+  // category: "/category",
   checkout: "/check-out",
   payment: "/payment",
   paymentoffline: "/paymentoffline",

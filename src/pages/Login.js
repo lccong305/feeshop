@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import PureLoading from "../components/Loading/PureLoading";
 import { loginUser } from "../redux/actions";
 
 const Container = styled.div`
@@ -63,6 +64,8 @@ const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const { isFetching } = useSelector((state) => state.auth.login);
+
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -80,6 +83,7 @@ const Login = () => {
       <Container>
         <Wrapper>
           <Title>SIGN IN</Title>
+          {isFetching ? <PureLoading /> : ""}
           <Form onSubmit={handleLogin}>
             <Input
               placeholder="username"
