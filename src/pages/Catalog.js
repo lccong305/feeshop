@@ -23,7 +23,7 @@ const Catalog = () => {
   const loading = useSelector((state) => state.product.loading);
 
   useEffect(() => {
-    dispatch(getAllProduct());
+    getAllProduct(dispatch);
   }, [dispatch]);
 
   const initFilter = {
@@ -124,9 +124,9 @@ const Catalog = () => {
         </div>
         <div className="catalog__content">
           {<InfinityList data={prdList} />}
+          {loading ? <PureLoading /> : ""}
         </div>
       </div>
-      {loading ? <PureLoading /> : ""}
     </Helmet>
   );
 };

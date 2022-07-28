@@ -33,19 +33,12 @@ const Product = () => {
   const { editProductFetching, editProductSuccess, editProductError } =
     useSelector((state) => state.adminproduct.editProduct);
 
-  const [isLoading, setIsLoading] = useState(!addProductFetching);
+  // const [isLoading, setIsLoading] = useState(!addProductFetching);
 
   useEffect(() => {
     setIsDelete(false);
-    dispatch(getAllProduct());
-  }, [
-    addProductFetching,
-    addProductSuccess,
-    editProductFetching,
-    editProductSuccess,
-    isDelete,
-    dispatch,
-  ]);
+    getAllProduct(dispatch);
+  }, [addProductFetching, editProductFetching, isDelete, dispatch]);
 
   const columns = [
     {
@@ -172,8 +165,12 @@ const Product = () => {
   const handleClose = () => {
     setOpen(false);
   };
+  const handleRefesh = () => {
+    getAllProduct(dispatch);
+  };
   return (
     <div className="prd-admin-wrap">
+      <button>-------</button>
       <DataTableGrid
         fixedHeader={true}
         scrollWidth={false}

@@ -30,19 +30,34 @@ import {
   GET_PRODUCT_BY_CATEGORY_START,
 } from "../constants";
 
-export const fetch_request = () => {
-  return { type: "products/fetch_request" };
+export const fetch_request = () => async (dispatch) => {
+  return dispatch({ type: "products/fetch_request" });
 };
 
-export const fetch_error = () => {
-  return { type: "products/fetch_error" };
+export const fetch_success = (data) => async (dispatch) => {
+  dispatch({ type: "products/fetch_success", payload: data });
 };
 
-export const getAllProduct = () => async (dispatch) => {
+export const fetch_error = () => async (dispatch) => {
+  return dispatch({ type: "products/fetch_error" });
+};
+
+// export const getAllProduct = () => async (dispatch) => {
+//   dispatch(fetch_request());
+//   try {
+//     const res = await axios.get("https://apieshopbasic.herokuapp.com/Product");
+//     dispatch({ type: "products/fetch_success", payload: res.data });
+//   } catch (err) {
+//     console.log(err);
+//     dispatch(fetch_error());
+//   }
+// };
+
+export const getAllProduct = async (dispatch) => {
   dispatch(fetch_request());
   try {
     const res = await axios.get("https://apieshopbasic.herokuapp.com/Product");
-    dispatch({ type: "products/fetch_success", payload: res.data });
+    dispatch(fetch_success(res.data));
   } catch (err) {
     console.log(err);
     dispatch(fetch_error());
