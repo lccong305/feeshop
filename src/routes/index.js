@@ -6,15 +6,15 @@ import Product from "../pages/Product";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
 import Profile from "../pages/Profile";
-// <<<<<<< HEAD
+<<<<<<< HEAD
 import Payment from "../pages/Payment";
 import PaymentOffline from "../pages/PaymentOffline";
 import PaymentPaypal from "../pages/PaymentPaypal";
 import PaymentVNPAY from "../pages/PaymentVNPAY";
 import Ordered from "../pages/Ordered";
-// =======
+=======
 import Category from "../pages/Category";
-// >>>>>>> 35fecdad0990d751f1e61cf8e429a041815b1896
+>>>>>>> 35fecdad0990d751f1e61cf8e429a041815b1896
 
 import ExtraLayout from "../components/layouts/ExtraLayout";
 // import { Dashboard } from "@mui/icons-material";
