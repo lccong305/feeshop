@@ -19,8 +19,6 @@ function App() {
     <Router>
       <div className="App">
         <Routes>
-          {/* {isUser
-              ?  */}
           {publicRoutes.map((route, index) => {
             const Page = route.component;
             let Layout = DefaultLayout;
@@ -54,31 +52,6 @@ function App() {
               />
             );
           })}
-
-          {/* : privateRoutes.map((route, index) => {
-                  const Page = route.component;
-                  let Layout = ExtraLayout;
-  
-                  if (route.layout) {
-                    Layout = route.layout;
-                  } else if (route.layout === null) {
-                    Layout = Fragment;
-                  }
-  
-                  return (
-                   <PrivateRoutes>
-                      <Route
-                        key={index}
-                        path={route.path}
-                        element={
-                          <Layout>
-                            <Page />
-                          </Layout>
-                        }
-                   </PrivateRoutes>
-                    />
-                  );
-                })} */}
         </Routes>
       </div>
     </Router>

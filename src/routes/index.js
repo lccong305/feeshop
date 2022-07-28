@@ -26,7 +26,7 @@ import ProfileLayout from "../components/layouts/ProfileLayout";
 
 const publicRoutes = [
   { path: "/", component: Home },
-<<<<<<< HEAD
+
   { path: config.routes.home, component: Home, property: false },
   { path: config.routes.cart, component: Cart, property: false },
   { path: config.routes.catalog, component: Catalog, property: false },
@@ -47,7 +47,7 @@ const publicRoutes = [
     layout: ExtraLayout,
     property: true,
   },
-=======
+
   { path: config.routes.home, component: Home },
   { path: config.routes.cart, component: Cart },
   { path: config.routes.catalog, component: Catalog },
@@ -56,16 +56,14 @@ const publicRoutes = [
   { path: config.routes.login, component: Login },
   { path: config.routes.register, component: Register },
   { path: config.routes.profile, component: Profile, layout: ProfileLayout },
-// <<<<<<< HEAD
+
   { path: config.routes.payment, component: Payment },
   { path: config.routes.paymentoffline, component: PaymentOffline },
   { path: config.routes.paymentpaypal, component: PaymentPaypal },
   { path: config.routes.paymentvnpay, component: PaymentVNPAY },
   { path: config.routes.orderer, component: Ordered },
-// =======
+
   { path: config.routes.category, component: Category },
-// >>>>>>> 35fecdad0990d751f1e61cf8e429a041815b1896
->>>>>>> 3e21953f87983f5d14abfe727aecb120445eb454
 ];
 
 const privateRoutes = [
