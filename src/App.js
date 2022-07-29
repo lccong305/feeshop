@@ -23,6 +23,10 @@ function App() {
             const Page = route.component;
             let Layout = DefaultLayout;
             let privateRoute = route.property;
+            console.log(privateRoute + "   heheh");
+            console.log(PrivateRoutes);
+            console.log(index + " index");
+            console.log(route.component + "  route");
             if (route.layout) {
               Layout = route.layout;
             } else if (route.layout === null) {

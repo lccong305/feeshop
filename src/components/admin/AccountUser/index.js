@@ -10,10 +10,17 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import axios from "axios";
-
+import AddUser from "../AddUser";
+import { getAllProduct, openModal } from "../../../redux/actions";
 const AccountUser = () => {
     const dataUser = useSelector((state) => state.user.getUser.users);
     const dispatch = useDispatch();
+    const [flag, setFlag] = useState(true);
+    const handleAddProduct = () => {
+      var x = document.getElementsByTagName("BODY")[0];
+      x.classList.add("act_body");
+      dispatch(openModal(flag));
+    };
     const { getUserFetching,getUserError} = useSelector((state) => state.user.getUser);
     const [open,setOpen] = useState(false);
     const [edit,setEdit] = useState(false);
@@ -29,6 +36,7 @@ const AccountUser = () => {
       setSuccess(false);
         dispatch(getAlluser());
       }, [success]);
+  
     const columns = [
         {
           name : "ID",
@@ -150,7 +158,7 @@ const AccountUser = () => {
         subHeader={true}
         subHeaderComponent={[
           <button
-          
+          onClick={handleAddProduct}
             className="btn.btn-sm btn-info add-product"
           >
             Add new user
@@ -164,7 +172,7 @@ const AccountUser = () => {
         ]}
       />
        {getUserFetching ? <PureLoading /> : "" }
-     
+        <AddUser />
     </div>
     )
 }

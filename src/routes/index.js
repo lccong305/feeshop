@@ -47,7 +47,12 @@ const publicRoutes = [
     layout: ExtraLayout,
     property: true,
   },
-
+  {
+    path: config.routes.account_user,
+    component: AccountUser,
+    layout: ExtraLayout,
+    property: true,
+  },
   { path: config.routes.home, component: Home },
   { path: config.routes.cart, component: Cart },
   { path: config.routes.catalog, component: Catalog },
@@ -66,10 +71,6 @@ const publicRoutes = [
   { path: config.routes.category, component: Category },
 ];
 
-const privateRoutes = [
-  { path: config.routes.dashboard, component: Dashboard },
-  { path: config.routes.account_user, component: AccountUser },
-  { path: config.routes.product_ad, component: ProductAdmin },
-];
 
-export { publicRoutes, privateRoutes };
+
+export { publicRoutes };
