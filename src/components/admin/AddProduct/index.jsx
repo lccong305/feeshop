@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addProduct, closeModal, getAllCate } from "../../../redux/actions";
+import {
+  addProduct,
+  closeModal,
+  getAllCate,
+  getAllProduct,
+} from "../../../redux/actions";
 import "./addproduct.scss";
 
 import FormControl from "@mui/material/FormControl";
@@ -8,7 +13,6 @@ import InputLabel from "@mui/material/Input";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import PureLoading from "../../Loading/PureLoading";
-// import FormControl from '@mui/material/FormControl';
 
 const AddProduct = () => {
   const dispatch = useDispatch();
@@ -71,7 +75,7 @@ const AddProduct = () => {
   const handleAddProduct = (e) => {
     e.preventDefault();
     var x = document.getElementsByTagName("BODY")[0];
-    // x.classList.remove("act_body");
+    x.classList.remove("act_body");
     const newProduct = {
       name: name,
       price: price,
@@ -80,6 +84,7 @@ const AddProduct = () => {
       categoryName: categoryName,
     };
     addProduct(newProduct, dispatch);
+    getAllProduct(dispatch);
   };
   const handleSetSize = () => {
     let sizeWrap = document
@@ -122,7 +127,9 @@ const AddProduct = () => {
                 onChange={(e) => setCategoryName(e.target.value)}
               >
                 {getCateData?.map((item) => (
-                  <MenuItem value={item.name}>{item.name}</MenuItem>
+                  <MenuItem key={item.id} value={item.name}>
+                    {item.name}
+                  </MenuItem>
                 ))}
               </Select>
             </FormControl>

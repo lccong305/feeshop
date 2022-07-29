@@ -7,69 +7,51 @@ import DefaultLayout from "./components/layouts/DefaultLayout";
 import ExtraLayout from "./components/layouts/ExtraLayout";
 import { useSelector } from "react-redux";
 import PureLoading from "./components/Loading/PureLoading";
+import PrivateRoutes from "./utils/PrivateRoutes";
 
 function App() {
   // const isUser = false;
-  const [isUser, setIsUser] = useState(true);
+
   const { currentUser, isFetching, error } = useSelector(
     (state) => state.auth.login
   );
-
-  useEffect(() => {
-    if (!currentUser) return;
-    currentUser.roles.map((item) => {
-      if (item.includes("admin")) {
-        setIsUser(false);
-      }
-    });
-  }, [isFetching]);
   return (
     <Router>
       <div className="App">
         <Routes>
-          {isUser
-            ? publicRoutes.map((route, index) => {
-                const Page = route.component;
-                let Layout = DefaultLayout;
-                if (route.layout) {
-                  Layout = route.layout;
-                } else if (route.layout === null) {
-                  Layout = Fragment;
+          {publicRoutes.map((route, index) => {
+            const Page = route.component;
+            let Layout = DefaultLayout;
+            let privateRoute = route.property;
+            if (route.layout) {
+              Layout = route.layout;
+            } else if (route.layout === null) {
+              Layout = Fragment;
+            }
+            return privateRoute ? (
+              <Route element={<PrivateRoutes />}>
+                <Route
+                  key={index}
+                  path={route.path}
+                  element={
+                    <Layout>
+                      <Page />
+                    </Layout>
+                  }
+                />
+              </Route>
+            ) : (
+              <Route
+                key={index}
+                path={route.path}
+                element={
+                  <Layout>
+                    <Page />
+                  </Layout>
                 }
-                return (
-                  <Route
-                    key={index}
-                    path={route.path}
-                    element={
-                      <Layout>
-                        <Page />
-                      </Layout>
-                    }
-                  />
-                );
-              })
-            : privateRoutes.map((route, index) => {
-                const Page = route.component;
-                let Layout = ExtraLayout;
-
-                if (route.layout) {
-                  Layout = route.layout;
-                } else if (route.layout === null) {
-                  Layout = Fragment;
-                }
-
-                return (
-                  <Route
-                    key={index}
-                    path={route.path}
-                    element={
-                      <Layout>
-                        <Page />
-                      </Layout>
-                    }
-                  />
-                );
-              })}
+              />
+            );
+          })}
         </Routes>
       </div>
     </Router>

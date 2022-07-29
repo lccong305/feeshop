@@ -19,7 +19,7 @@ const EditProduct = () => {
 
   const id = useSelector((state) => state.productModal.value);
   const prd = useSelector((state) => state.product.product_detail);
-  // const { isSuccess } = useSelector((state) => state.adminproduct.addProduct);
+
   const { getCateData, getCateFetching } = useSelector(
     (state) => state.cate.getCate
   );

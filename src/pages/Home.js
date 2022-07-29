@@ -25,7 +25,7 @@ const Home = () => {
   }, []);
 
   useEffect(() => {
-    dispatch(getAllProduct());
+    getAllProduct(dispatch);
   }, [dispatch]);
 
   const getProducts = (count) => {
@@ -76,6 +76,8 @@ const Home = () => {
       </Section>
       {/* {loading_product ? <PureLoading /> : ""} */}
     </Helmet>
+
+
   );
 };
 

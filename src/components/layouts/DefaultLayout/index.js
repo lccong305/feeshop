@@ -7,7 +7,7 @@ const DefaultLayout = ({ children }) => {
   return (
     <div className="wrapper">
       <Header />
-      <div className="main container_df">{children}</div>
+      <div className="main default-layout-container">{children}</div>
       <Footer />
       <ProductViewModal />
     </div>

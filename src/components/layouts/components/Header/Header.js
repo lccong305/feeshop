@@ -25,11 +25,25 @@ const mainNav = [
     display: "Sản phẩm",
     path: "/catalog",
   },
-  // {
-  //   display: "Danh muc",
-  // },
 ];
 const Header = () => {
+  const [showAdmin, setShowAdmin] = useState(false);
+  const { currentUser, isFetching, error } = useSelector(
+    (state) => state.auth.login
+  );
+
+  useEffect(() => {
+    dispatch(getAllCate);
+  }, []);
+
+  useEffect(() => {
+    currentUser?.roles.map((item) => {
+      if (item.includes("admin")) {
+        setShowAdmin(true);
+      }
+    });
+  }, [isFetching]);
+
   const { pathname } = useLocation();
   const [showDropdown, setShowDropdown] = useState(false);
   const activeNav = mainNav.findIndex((e) => e.path === pathname);
@@ -45,8 +59,6 @@ const Header = () => {
   };
 
   useEffect(() => {
-    getAllCate(dispatch);
-
     window.addEventListener("scroll", () => {
       if (
         document.body.scrollTop > 80 ||
@@ -63,7 +75,6 @@ const Header = () => {
   }, []);
 
   const menuLeft = useRef(null);
-
   const menuToggle = () => menuLeft.current.classList.toggle("active");
 
   const Dropdown = styled.div`
@@ -95,6 +106,18 @@ const Header = () => {
     font-size: 16px;
   `;
 
+  const Admin = styled.div`
+    position: relative;
+    height: 50px;
+    line-height: 50px;
+    margin-left: 20px;
+    z-index: 120;
+  `;
+  const AdminTitle = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  `;
   return (
     <div className="header" ref={headerRef}>
       <div className="container">
@@ -120,10 +143,17 @@ const Header = () => {
                 onClick={menuToggle}
               >
                 <Link to={item.path ? item.path : "#"}>
-                  <span>{item.display}</span>
+                  {<span>{item.display}</span>}
                 </Link>
               </div>
             ))}
+
+            <Admin>
+              <AdminTitle>
+                {showAdmin && <Link to="../product_ad">Admin</Link>}
+              </AdminTitle>
+            </Admin>
+
             <Dropdown>
               <DropdownTitle onClick={handleToggleShowDropdown} to="#">
                 Danh mục
