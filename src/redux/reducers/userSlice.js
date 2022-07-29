@@ -5,6 +5,9 @@ import {
   GET_USER_START,
   GET_USER_SUCCESS,
   GET_USER_ERROR,
+  GET_ALL_USER_FAIL,
+  GET_ALL_USER,
+  GET_ALL_USER_FETCHING,
 } from "../constants";
 
 const initialState = {
@@ -14,6 +17,7 @@ const initialState = {
     error: false,
   },
   getUser: {
+    users:[],
     getUserFetching: false,
     getUserData: null,
     getUserError: false,
@@ -54,7 +58,29 @@ const userSlice = (state = initialState, action) => {
           getUserFetching: true,
         },
       };
-
+    case GET_ALL_USER_FETCHING :
+      return {
+        ...state,
+        getUser: {
+          getUserFetching: true,
+        },
+      };
+    case GET_ALL_USER_FAIL :
+        return {
+          ...state,
+          getUser: {
+            getUserFetching: false,
+            getUserError: true,
+          },
+        };
+    case GET_ALL_USER :
+      return {
+        ...state,
+        getUser :{
+          getUserFetching: false,
+          users : action.payload,
+        }
+      } 
     case GET_USER_SUCCESS:
       return {
         ...state,
@@ -63,6 +89,7 @@ const userSlice = (state = initialState, action) => {
           getUserData: action.payload,
         },
       };
+    
     case GET_USER_ERROR:
       return {
         ...state,

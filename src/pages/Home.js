@@ -27,7 +27,7 @@ const Home = () => {
   }, []);
 
   useEffect(() => {
-    dispatch(getAllProduct());
+    getAllProduct(dispatch);
   }, [dispatch]);
 
   const getProducts = (count) => {
