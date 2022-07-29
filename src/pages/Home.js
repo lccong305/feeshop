@@ -11,6 +11,8 @@ import ProductCard from "../components/ProductCard";
 import Section, { SectionBody, SectionTitle } from "../components/Section";
 import { getAllProduct } from "../redux/actions";
 
+
+
 const Home = () => {
   const dispatch = useDispatch();
 
