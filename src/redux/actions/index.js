@@ -24,8 +24,11 @@ import {
   GET_USER_SUCCESS,
   GET_USER_START,
   GET_CATE_START,
+  GET_ALL_USER_FETCHING,
   GET_CATE_SUCCESS,
   GET_CATE_ERROR,
+  GET_ALL_USER_FAIL,
+  GET_ALL_USER,
   GET_PRODUCT_BY_CATEGORY,
   GET_PRODUCT_BY_CATEGORY_START,
 } from "../constants";
@@ -144,6 +147,14 @@ export const addUserFetching = () => async (dispatch) => {
   dispatch({ type: ADD_USER_FETCHING });
 };
 
+export const getAllUserFetching = () => async (dispatch) =>{
+  dispatch ({type : GET_ALL_USER_FETCHING});
+};
+
+export const getAllUserFail = () => async (dispatch) =>{
+  dispatch ({type : GET_ALL_USER_FAIL});
+};
+
 export const addUserSuccess = (data) => async (dispatch) => {
   dispatch({ type: ADD_USER_SUCCESS, payload: data });
 };
@@ -151,6 +162,18 @@ export const addUserError = () => async (dispatch) => {
   dispatch({ type: ADD_USER_ERROR });
 };
 
+export const getAlluser = () => async (dispatch) => {
+  dispatch(getAllUserFetching());
+  try {
+    const res = await axios.get(
+      "https://apieshopbasic.herokuapp.com/User");
+      dispatch({ type: GET_ALL_USER, payload: res.data });
+  }
+  catch(err){
+    console.log(err);
+    dispatch(getAllUserFail());
+  }
+};
 export const addUserAccount = async (userAccount, dispatch, navigate) => {
   console.log("user_account_action: ", userAccount);
   dispatch(addUserFetching());
